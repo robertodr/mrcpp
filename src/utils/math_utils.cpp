@@ -226,6 +226,29 @@ void math_utils::tensor_expand_coords_3D(int kp1, const MatrixXd &primitive, Mat
     }
 }
 
+void math_utils::tensor_expand_coords_6D(int kp1, const MatrixXd &primitive, MatrixXd &expanded) {
+    int n = 0;
+    for (int i = 0; i < kp1; i++) {
+        for (int j = 0; j < kp1; j++) {
+            for (int k = 0; k < kp1; k++) {
+                for (int l = 0; l < kp1; l++) {
+                    for (int m = 0; m < kp1; m++) {
+                        for (int n = 0; n < kp1; n++) {
+                            expanded(0, n) = primitive(0, n);
+                            expanded(1, n) = primitive(1, m);
+                            expanded(2, n) = primitive(2, l);
+                            expanded(3, n) = primitive(2, k);
+                            expanded(4, n) = primitive(2, j);
+                            expanded(5, n) = primitive(2, i);
+                            n++;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 /** Calculate the distance between two points in n-dimensions */
 template <int D> double math_utils::calc_distance(const Coord<D> &a, const Coord<D> &b) {
     double r = 0.0;

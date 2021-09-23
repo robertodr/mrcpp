@@ -61,6 +61,7 @@ void tensor_expand_coefs(int dim, int dir, int kp1, int kp1_d, const Eigen::Matr
 
 void tensor_expand_coords_2D(int kp1, const Eigen::MatrixXd &primitive, Eigen::MatrixXd &expanded);
 void tensor_expand_coords_3D(int kp1, const Eigen::MatrixXd &primitive, Eigen::MatrixXd &expanded);
+void tensor_expand_coords_6D(int kp1, const Eigen::MatrixXd &primitive, Eigen::MatrixXd &expanded);
 
 template <class T> std::vector<std::vector<T>> cartesian_product(std::vector<T> A, std::vector<T> B);
 template <class T> std::vector<std::vector<T>> cartesian_product(std::vector<std::vector<T>> l_A, std::vector<T> B);

@@ -677,7 +677,10 @@ template <int D> void MWNode<D>::getExpandedQuadPts(Eigen::MatrixXd &pts) const 
     if (D == 1) pts = prim_pts;
     if (D == 2) math_utils::tensor_expand_coords_2D(kp1, prim_pts, pts);
     if (D == 3) math_utils::tensor_expand_coords_3D(kp1, prim_pts, pts);
-    if (D >= 4) NOT_IMPLEMENTED_ABORT;
+    if (D == 4) NOT_IMPLEMENTED_ABORT;
+    if (D == 5) NOT_IMPLEMENTED_ABORT;
+    if (D == 6) math_utils::tensor_expand_coords_6D(kp1, prim_pts, pts);
+    if (D >= 7) NOT_IMPLEMENTED_ABORT;
 }
 
 template <int D> void MWNode<D>::getExpandedChildPts(MatrixXd &pts) const {
@@ -699,7 +702,10 @@ template <int D> void MWNode<D>::getExpandedChildPts(MatrixXd &pts) const {
         if (D == 1) exp_t = prim_t;
         if (D == 2) math_utils::tensor_expand_coords_2D(kp1, prim_t, exp_t);
         if (D == 3) math_utils::tensor_expand_coords_3D(kp1, prim_t, exp_t);
-        if (D >= 4) NOT_IMPLEMENTED_ABORT;
+        if (D == 4) NOT_IMPLEMENTED_ABORT;
+        if (D == 5) NOT_IMPLEMENTED_ABORT;
+        if (D == 6) math_utils::tensor_expand_coords_6D(kp1, prim_t, exp_t);
+        if (D >= 7) NOT_IMPLEMENTED_ABORT;
         pts.block(0, t * kp1_d, D, kp1_d) = exp_t;
     }
 }

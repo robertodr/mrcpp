@@ -1,14 +1,15 @@
 #include "MRCPP/MWFunctions"
 #include "MRCPP/Printer"
 #include "MRCPP/Timer"
+#include "MRCPP/utils/math_utils.h"
 
-const auto min_scale = -4;
-const auto max_depth = 25;
+const auto min_scale = 0;
+const auto max_depth = 20;
 
-const auto order = 7;
-const auto prec = 1.0e-5;
+const auto order = 5;
+const auto prec = 1.0e-3;
 
-const auto D = 3;
+const auto D = 6;
 int main(int argc, char **argv) {
     auto timer = mrcpp::Timer();
 
@@ -18,20 +19,23 @@ int main(int argc, char **argv) {
     mrcpp::print::environment(0);
 
     // Constructing world box
-    auto corner = std::array<int, D>{-1, -1, -1};
-    auto boxes = std::array<int, D>{2, 2, 2};
+    auto corner = std::array<int, D>{};
+    auto boxes = std::array<int, D>{};
+    corner.fill(-1);
+    boxes.fill(2);
     auto world = mrcpp::BoundingBox<D>(min_scale, corner, boxes);
 
     // Constructing basis and MRA
     auto basis = mrcpp::InterpolatingBasis(order);
     auto MRA = mrcpp::MultiResolutionAnalysis<D>(world, basis, max_depth);
+    MRA.print();
 
     // Defining analytic function
-    auto f = [](const mrcpp::Coord<D> &r) -> double {
-        const auto beta = 100.0;
-        const auto alpha = std::pow(beta / mrcpp::pi, 3.0 / 2.0);
-        ;
-        auto R = std::sqrt(r[0] * r[0] + r[1] * r[1] + r[2] * r[2]);
+    const auto beta = 10.0;
+    const auto alpha = std::pow(beta / mrcpp::pi, D / 2.0);
+    const auto r_0 = mrcpp::Coord<D>{};
+    auto f = [alpha, beta, r_0](const mrcpp::Coord<D> &r) -> double {
+        auto R = mrcpp::math_utils::calc_distance<D>(r, r_0);
         return alpha * std::exp(-beta * R * R);
     };
 

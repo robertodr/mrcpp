@@ -128,11 +128,15 @@ template <int D> void project(double prec, FunctionTreeVector<D> &out, std::vect
 template void project<1>(double prec, FunctionTree<1> &out, RepresentableFunction<1> &inp, int maxIter, bool absPrec);
 template void project<2>(double prec, FunctionTree<2> &out, RepresentableFunction<2> &inp, int maxIter, bool absPrec);
 template void project<3>(double prec, FunctionTree<3> &out, RepresentableFunction<3> &inp, int maxIter, bool absPrec);
+template void project<6>(double prec, FunctionTree<6> &out, RepresentableFunction<6> &inp, int maxIter, bool absPrec);
 
 template void project<1>(double prec, FunctionTree<1> &out, std::function<double(const Coord<1> &r)> func, int maxIter, bool absPrec);
 template void project<2>(double prec, FunctionTree<2> &out, std::function<double(const Coord<2> &r)> func, int maxIter, bool absPrec);
 template void project<3>(double prec, FunctionTree<3> &out, std::function<double(const Coord<3> &r)> func, int maxIter, bool absPrec);
+template void project<6>(double prec, FunctionTree<6> &out, std::function<double(const Coord<6> &r)> func, int maxIter, bool absPrec);
+
 template void project<1>(double prec, FunctionTreeVector<1> &out, std::vector<std::function<double(const Coord<1> &r)>> inp, int maxIter, bool absPrec);
 template void project<2>(double prec, FunctionTreeVector<2> &out, std::vector<std::function<double(const Coord<2> &r)>> inp, int maxIter, bool absPrec);
 template void project<3>(double prec, FunctionTreeVector<3> &out, std::vector<std::function<double(const Coord<3> &r)>> inp, int maxIter, bool absPrec);
+template void project<6>(double prec, FunctionTreeVector<6> &out, std::vector<std::function<double(const Coord<6> &r)>> inp, int maxIter, bool absPrec);
 } // namespace mrcpp

@@ -47,8 +47,7 @@ template <int D>
 MWNode<D>::MWNode()
         : tree(nullptr)
         , parent(nullptr)
-        , nodeIndex()
-        , hilbertPath() {
+        , nodeIndex() {
     setIsLeafNode();
     setIsLooseNode();
 
@@ -61,8 +60,7 @@ template <int D>
 MWNode<D>::MWNode(MWTree<D> *tree, const NodeIndex<D> &idx)
         : tree(tree)
         , parent(nullptr)
-        , nodeIndex(idx)
-        , hilbertPath() {
+        , nodeIndex(idx) {
     for (int i = 0; i < getTDim(); i++) this->children[i] = nullptr;
     clearNorms();
     clearIsAllocated();
@@ -74,8 +72,7 @@ template <int D>
 MWNode<D>::MWNode(MWTree<D> *tree, int rIdx)
         : tree(tree)
         , parent(nullptr)
-        , nodeIndex(tree->getRootBox().getNodeIndex(rIdx))
-        , hilbertPath() {
+        , nodeIndex(tree->getRootBox().getNodeIndex(rIdx)) {
     for (int i = 0; i < getTDim(); i++) this->children[i] = nullptr;
     clearNorms();
     clearIsAllocated();
@@ -87,8 +84,7 @@ template <int D>
 MWNode<D>::MWNode(MWNode<D> *parent, int cIdx)
         : tree(parent->tree)
         , parent(parent)
-        , nodeIndex(parent->getNodeIndex().child(cIdx))
-        , hilbertPath(parent->getHilbertPath(), cIdx) {
+        , nodeIndex(parent->getNodeIndex().child(cIdx)) {
     for (int i = 0; i < getTDim(); i++) this->children[i] = nullptr;
     clearNorms();
     clearIsAllocated();
@@ -102,8 +98,7 @@ template <int D>
 MWNode<D>::MWNode(const MWNode<D> &node)
         : tree(node.tree)
         , parent(nullptr)
-        , nodeIndex(node.nodeIndex)
-        , hilbertPath(node.hilbertPath) {
+        , nodeIndex(node.nodeIndex) {
     for (int i = 0; i < getTDim(); i++) this->children[i] = nullptr;
     setIsLeafNode();
     setIsLooseNode();

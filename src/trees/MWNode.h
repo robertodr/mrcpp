@@ -29,12 +29,13 @@
 
 #pragma once
 
+#include <functional>
+
 #include <Eigen/Core>
 
 #include "MRCPP/macros.h"
 #include "utils/omp_utils.h"
 
-#include "HilbertPath.h"
 #include "MWTree.h"
 #include "NodeIndex.h"
 
@@ -58,7 +59,6 @@ public:
     void setSerialIx(int Ix) { this->serialIx = Ix; }
 
     const NodeIndex<D> &getNodeIndex() const { return this->nodeIndex; }
-    const HilbertPath<D> &getHilbertPath() const { return this->hilbertPath; }
 
     void getCenter(double *r) const;
     void getBounds(double *lb, double *ub) const;
@@ -88,13 +88,13 @@ public:
     void getExpandedQuadPts(Eigen::MatrixXd &pts) const;
     void getExpandedChildPts(Eigen::MatrixXd &pts) const;
 
-    MWTree<D> &getMWTree() { return static_cast<MWTree<D> &>(*this->tree); }
-    MWNode<D> &getMWParent() { return static_cast<MWNode<D> &>(*this->parent); }
-    MWNode<D> &getMWChild(int i) { return static_cast<MWNode<D> &>(*this->children[i]); }
+    MWTree<D> &getMWTree() { return std::ref(*this->tree); }
+    MWNode<D> &getMWParent() { return std::ref(*this->parent); }
+    MWNode<D> &getMWChild(int i) { return std::ref(*this->children[i]); }
 
-    const MWTree<D> &getMWTree() const { return static_cast<const MWTree<D> &>(*this->tree); }
-    const MWNode<D> &getMWParent() const { return static_cast<const MWNode<D> &>(*this->parent); }
-    const MWNode<D> &getMWChild(int i) const { return static_cast<const MWNode<D> &>(*this->children[i]); }
+    const MWTree<D> &getMWTree() const { return std::cref(*this->tree); }
+    const MWNode<D> &getMWParent() const { return std::cref(*this->parent); }
+    const MWNode<D> &getMWChild(int i) const { return std::cref(*this->children[i]); }
 
     void zeroCoefs();
     void setCoefBlock(int block, int block_size, const double *c);
@@ -170,7 +170,6 @@ protected:
     int childSerialIx{-1};  // index of first child in serial Tree, or -1 for leafnodes/endnodes
 
     NodeIndex<D> nodeIndex;
-    HilbertPath<D> hilbertPath;
 
     MWNode();
     MWNode(MWTree<D> *tree, int rIdx);
@@ -219,13 +218,13 @@ protected:
 
     virtual std::ostream &print(std::ostream &o) const;
 
-    static const unsigned char FlagBranchNode = B8(00000001);
-    static const unsigned char FlagGenNode = B8(00000010);
-    static const unsigned char FlagHasCoefs = B8(00000100);
-    static const unsigned char FlagAllocated = B8(00001000);
-    static const unsigned char FlagEndNode = B8(00010000);
-    static const unsigned char FlagRootNode = B8(00100000);
-    static const unsigned char FlagLooseNode = B8(01000000);
+    static constexpr unsigned char FlagBranchNode = B8(00000001);
+    static constexpr unsigned char FlagGenNode = B8(00000010);
+    static constexpr unsigned char FlagHasCoefs = B8(00000100);
+    static constexpr unsigned char FlagAllocated = B8(00001000);
+    static constexpr unsigned char FlagEndNode = B8(00010000);
+    static constexpr unsigned char FlagRootNode = B8(00100000);
+    static constexpr unsigned char FlagLooseNode = B8(01000000);
 
 private:
     unsigned char status{0};

@@ -24,45 +24,39 @@
  */
 
 #include "TreeIterator.h"
+#include "HilbertPath.h"
 #include "MWNode.h"
 #include "utils/Printer.h"
 
 namespace mrcpp {
 
-template <int D> TreeIterator<D>::TreeIterator(int traverse, int iterator)
+template <int D, Traverse T, Iterator I>
+TreeIterator<D, T, I>::TreeIterator(MWTree<D> &tree)
         : root(0)
         , nRoots(0)
-        , mode(traverse)
-        , type(iterator)
-        , maxDepth(-1)
-        , state(nullptr)
-        , initialState(nullptr) {}
-
-template <int D> TreeIterator<D>::TreeIterator(MWTree<D> &tree, int traverse, int iterator)
-        : root(0)
-        , nRoots(0)
-        , mode(traverse)
-        , type(iterator)
         , maxDepth(-1)
         , state(nullptr)
         , initialState(nullptr) {
     init(tree);
 }
 
-template <int D> TreeIterator<D>::~TreeIterator() {
+template <int D, Traverse T, Iterator I> TreeIterator<D, T, I>::~TreeIterator() {
     if (this->initialState != nullptr) delete this->initialState;
 }
 
-template<int D> int TreeIterator<D>::getChildIndex(int i) const {
-    const MWNode<D> &node = *this->state->node;
-    const HilbertPath<D> &h = node.getHilbertPath();
+template <int D, Traverse T, Iterator I> int TreeIterator<D, T, I>::getChildIndex(int i) const {
     // Legesgue type returns i, Hilbert type returns Hilbert index
-    return (this->type == Hilbert) ? h.getZIndex(i) : i;
+    if constexpr (D <= 3 && type == Hilbert) {
+        const auto &h = HilbertPath<D>();
+        return h.getZIndex(i);
+    } else {
+        return i;
+    }
 }
 
-template <int D> bool TreeIterator<D>::next() {
+template <int D, Traverse T, Iterator I> bool TreeIterator<D, T, I>::next() {
     if (not this->state) return false;
-    if (this->mode == TopDown) {
+    if constexpr (mode == TopDown) {
         if (this->tryNode()) return true;
     }
     MWNode<D> &node = *this->state->node;
@@ -74,15 +68,15 @@ template <int D> bool TreeIterator<D>::next() {
         }
     }
     if (this->tryNextRoot()) return true;
-    if (this->mode == BottomUp) {
+    if constexpr (mode == BottomUp) {
         if (this->tryNode()) return true;
     }
     this->removeState();
     return next();
 }
-template <int D> bool TreeIterator<D>::nextParent() {
+template <int D, Traverse T, Iterator I> bool TreeIterator<D, T, I>::nextParent() {
     if (not this->state) return false;
-    if (this->mode == BottomUp) {
+    if constexpr (mode == BottomUp) {
         if (this->tryNode()) return true;
     }
     MWNode<D> &node = *this->state->node;
@@ -90,14 +84,14 @@ template <int D> bool TreeIterator<D>::nextParent() {
     if (checkDepth(node)) {
         if (this->tryParent()) return true;
     }
-    if (this->mode == TopDown) {
+    if constexpr (mode == TopDown) {
         if (this->tryNode()) return true;
     }
     this->removeState();
     return nextParent();
 }
 
-template <int D> void TreeIterator<D>::init(MWTree<D> &tree) {
+template <int D, Traverse T, Iterator I> void TreeIterator<D, T, I>::init(MWTree<D> &tree) {
     this->root = 0;
     this->maxDepth = -1;
     this->nRoots = tree.getRootBox().size();
@@ -106,14 +100,14 @@ template <int D> void TreeIterator<D>::init(MWTree<D> &tree) {
     this->initialState = this->state;
 }
 
-template <int D> bool TreeIterator<D>::tryNode() {
+template <int D, Traverse T, Iterator I> bool TreeIterator<D, T, I>::tryNode() {
     if (not this->state) { return false; }
     if (this->state->doneNode) { return false; }
     this->state->doneNode = true;
     return true;
 }
 
-template <int D> bool TreeIterator<D>::tryChild(int i) {
+template <int D, Traverse T, Iterator I> bool TreeIterator<D, T, I>::tryChild(int i) {
     if (not this->state) { return false; }
     if (this->state->doneChild[i]) { return false; }
     this->state->doneChild[i] = true;
@@ -123,7 +117,7 @@ template <int D> bool TreeIterator<D>::tryChild(int i) {
     return next();
 }
 
-template <int D> bool TreeIterator<D>::tryParent() {
+template <int D, Traverse T, Iterator I> bool TreeIterator<D, T, I>::tryParent() {
     if (not this->state) return false;
     if (this->state->doneParent) return false;
     this->state->doneParent = true;
@@ -133,7 +127,7 @@ template <int D> bool TreeIterator<D>::tryParent() {
     return nextParent();
 }
 
-template <int D> bool TreeIterator<D>::tryNextRoot() {
+template <int D, Traverse T, Iterator I> bool TreeIterator<D, T, I>::tryNextRoot() {
     if (not this->state) { return false; }
     if (not this->state->node->isRootNode()) { return false; }
     this->root++;
@@ -143,7 +137,7 @@ template <int D> bool TreeIterator<D>::tryNextRoot() {
     return next();
 }
 
-template <int D> bool TreeIterator<D>::tryNextRootParent() {
+template <int D, Traverse T, Iterator I> bool TreeIterator<D, T, I>::tryNextRootParent() {
     if (not this->state) { return false; }
     if (not this->state->node->isRootNode()) { return false; }
     this->root++;
@@ -153,7 +147,7 @@ template <int D> bool TreeIterator<D>::tryNextRootParent() {
     return nextParent();
 }
 
-template <int D> void TreeIterator<D>::removeState() {
+template <int D, Traverse T, Iterator I> void TreeIterator<D, T, I>::removeState() {
     if (this->state == this->initialState) { this->initialState = nullptr; }
     if (this->state != nullptr) {
         IteratorNode<D> *spare = this->state;
@@ -163,35 +157,7 @@ template <int D> void TreeIterator<D>::removeState() {
     }
 }
 
-template <int D> void TreeIterator<D>::setTraverse(int traverse) {
-    switch (traverse) {
-        case TopDown:
-            this->mode = TopDown;
-            break;
-        case BottomUp:
-            this->mode = BottomUp;
-            break;
-        default:
-            MSG_ABORT("Invalid traverse direction!");
-            break;
-    }
-}
-
-template <int D> void TreeIterator<D>::setIterator(int iterator) {
-    switch (iterator) {
-        case Lebesgue:
-            this->type = Lebesgue;
-            break;
-        case Hilbert:
-            this->type = Hilbert;
-            break;
-        default:
-            MSG_ABORT("Invalid iterator type!");
-            break;
-    }
-}
-
-template <int D> bool TreeIterator<D>::checkDepth(const MWNode<D> &node) const {
+template <int D, Traverse T, Iterator I> bool TreeIterator<D, T, I>::checkDepth(const MWNode<D> &node) const {
     if (this->maxDepth < 0) {
         return true;
     } else if (node.getDepth() < this->maxDepth) {
@@ -201,7 +167,7 @@ template <int D> bool TreeIterator<D>::checkDepth(const MWNode<D> &node) const {
     }
 }
 
-template <int D> bool TreeIterator<D>::checkGenerated(const MWNode<D> &node) const {
+template <int D, Traverse T, Iterator I> bool TreeIterator<D, T, I>::checkGenerated(const MWNode<D> &node) const {
     if (node.isEndNode() and not this->returnGenNodes) {
         return false;
     } else {
@@ -219,9 +185,22 @@ IteratorNode<D>::IteratorNode(MWNode<D> *nd, IteratorNode<D> *nx)
     for (int i = 0; i < nChildren; i++) { this->doneChild[i] = false; }
 }
 
-template class TreeIterator<1>;
-template class TreeIterator<2>;
-template class TreeIterator<3>;
+template class TreeIterator<1, TopDown, Hilbert>;
+template class TreeIterator<2, TopDown, Hilbert>;
+template class TreeIterator<3, TopDown, Hilbert>;
 
-template class TreeIterator<6>;
+template class TreeIterator<1, TopDown, Lebesgue>;
+template class TreeIterator<2, TopDown, Lebesgue>;
+template class TreeIterator<3, TopDown, Lebesgue>;
+
+template class TreeIterator<1, BottomUp, Hilbert>;
+template class TreeIterator<2, BottomUp, Hilbert>;
+template class TreeIterator<3, BottomUp, Hilbert>;
+
+template class TreeIterator<1, BottomUp, Lebesgue>;
+template class TreeIterator<2, BottomUp, Lebesgue>;
+template class TreeIterator<3, BottomUp, Lebesgue>;
+
+template class TreeIterator<6, TopDown, Lebesgue>;
+template class TreeIterator<6, BottomUp, Lebesgue>;
 } // namespace mrcpp

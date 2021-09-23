@@ -30,16 +30,16 @@
 
 namespace mrcpp {
 
-template <int D> class TreeIterator {
+template <int D, Traverse T = TopDown, Iterator I = Lebesgue> class TreeIterator {
 public:
-    TreeIterator(int traverse = TopDown, int iterator = Lebesgue);
-    TreeIterator(MWTree<D> &tree, int traverse = TopDown, int iterator = Lebesgue);
+    static constexpr auto mode = T;
+    static constexpr auto type = I;
+
+    TreeIterator(MWTree<D> &tree);
     virtual ~TreeIterator();
 
     void setReturnGenNodes(bool i = true) { this->returnGenNodes = i; }
     void setMaxDepth(int depth) { this->maxDepth = depth; }
-    void setTraverse(int traverse);
-    void setIterator(int iterator);
 
     void init(MWTree<D> &tree);
     bool next();
@@ -49,14 +49,12 @@ public:
     friend class IteratorNode<D>;
 
 protected:
-    int root;
-    int nRoots;
-    int mode;
-    int type;
-    int maxDepth;
+    int root{0};
+    int nRoots{0};
+    int maxDepth{-1};
     bool returnGenNodes{true};
-    IteratorNode<D> *state;
-    IteratorNode<D> *initialState;
+    IteratorNode<D> *state{nullptr};
+    IteratorNode<D> *initialState{nullptr};
 
     int getChildIndex(int i) const;
 

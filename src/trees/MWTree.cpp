@@ -32,9 +32,9 @@
 #include "MWTree.h"
 
 #include "MWNode.h"
-#include "TreeIterator.h"
 #include "MultiResolutionAnalysis.h"
 #include "NodeAllocator.h"
+#include "TreeIterator.h"
 #include "utils/Printer.h"
 #include "utils/math_utils.h"
 #include "utils/periodic_utils.h"
@@ -362,7 +362,8 @@ template <int D> MWNodeVector<D> *MWTree<D>::copyEndNodeTable() {
 
 template <int D> void MWTree<D>::resetEndNodeTable() {
     clearEndNodeTable();
-    TreeIterator<D> it(*this, TopDown, Hilbert);
+    constexpr auto I = (D <= 3) ? Hilbert : Lebesgue;
+    TreeIterator<D, TopDown, I> it(*this);
     it.setReturnGenNodes(false);
     while (it.next()) {
         MWNode<D> &node = it.getNode();

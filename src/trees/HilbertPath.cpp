@@ -119,6 +119,4 @@ const int HilbertPath<3>::hTable[12][8] = {
 template class HilbertPath<1>;
 template class HilbertPath<2>;
 template class HilbertPath<3>;
-
-template class HilbertPath<6>;
 } // namespace mrcpp

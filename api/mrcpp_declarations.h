@@ -94,7 +94,10 @@ template <int D> class AnalyticAdaptor;
 template <int D> class WaveletAdaptor;
 template <int D> class CopyAdaptor;
 
-template <int D> class TreeIterator;
+enum Traverse : int;
+enum Iterator : int;
+
+template <int D, Traverse T, Iterator I> class TreeIterator;
 template <int D> class IteratorNode;
 
 class BandWidth;

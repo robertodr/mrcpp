@@ -67,7 +67,8 @@ template <int D> bool tree_utils::split_check(const MWNode<D> &node, double prec
 /** Traverse tree along the Hilbert path and find nodes of any rankId.
  * Returns one nodeVector for the whole tree. GenNodes disregarded. */
 template <int D> void tree_utils::make_node_table(MWTree<D> &tree, MWNodeVector<D> &table) {
-    TreeIterator<D> it(tree, TopDown, Hilbert);
+    constexpr auto I = (D <= 3) ? Hilbert : Lebesgue;
+    TreeIterator<D, TopDown, I> it(tree);
     it.setReturnGenNodes(false);
     while (it.nextParent()) {
         MWNode<D> &node = it.getNode();
@@ -84,7 +85,8 @@ template <int D> void tree_utils::make_node_table(MWTree<D> &tree, MWNodeVector<
 /** Traverse tree along the Hilbert path and find nodes of any rankId.
  * Returns one nodeVector per scale. GenNodes disregarded. */
 template <int D> void tree_utils::make_node_table(MWTree<D> &tree, std::vector<MWNodeVector<D>> &table) {
-    TreeIterator<D> it(tree, TopDown, Hilbert);
+    constexpr auto I = (D <= 3) ? Hilbert : Lebesgue;
+    TreeIterator<D, TopDown, I> it(tree);
     it.setReturnGenNodes(false);
     while (it.nextParent()) {
         MWNode<D> &node = it.getNode();

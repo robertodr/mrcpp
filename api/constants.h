@@ -27,19 +27,19 @@
 
 namespace mrcpp {
 
-const double MachinePrec = 1.0e-15;
-const double MachineZero = 1.0e-14;
-const int MaxOrder = 41;  ///< Maximum scaling order
-const int MaxDepth = 30;  ///< Maximum depth of trees
-const int MaxScale = 31;  ///< Maximum scale of trees
-const int MinScale = -31; ///< Minimum scale of trees
-const int MaxSepRank = 1000;
+inline constexpr double MachinePrec = 1.0e-15;
+inline constexpr double MachineZero = 1.0e-14;
+inline constexpr int MaxOrder = 41;  ///< Maximum scaling order
+inline constexpr int MaxDepth = 30;  ///< Maximum depth of trees
+inline constexpr int MaxScale = 31;  ///< Maximum scale of trees
+inline constexpr int MinScale = -31; ///< Minimum scale of trees
+inline constexpr int MaxSepRank = 1000;
 
 namespace Axis {
-const int None = -1;
-const int X = 0;
-const int Y = 1;
-const int Z = 2;
+inline constexpr int None = -1;
+inline constexpr int X = 0;
+inline constexpr int Y = 1;
+inline constexpr int Z = 2;
 } // namespace Axis
 
 enum Spin { Paired, Alpha, Beta };
@@ -52,8 +52,8 @@ enum Traverse { TopDown, BottomUp };
 enum Iterator { Lebesgue, Hilbert };
 
 // Math constants
-const double pi = 3.1415926535897932384626433832795;
-const double root_pi = 1.7724538509055160273;
-const double C_x = -0.73855876638202240588; // Dirac exchange constant
+inline constexpr double pi = 3.1415926535897932384626433832795;
+inline constexpr double root_pi = 1.7724538509055160273;
+inline constexpr double C_x = -0.73855876638202240588; // Dirac exchange constant
 
 } // namespace mrcpp

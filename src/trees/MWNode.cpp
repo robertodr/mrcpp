@@ -981,4 +981,5 @@ template class MWNode<1>;
 template class MWNode<2>;
 template class MWNode<3>;
 
+template class MWNode<6>;
 } // namespace mrcpp

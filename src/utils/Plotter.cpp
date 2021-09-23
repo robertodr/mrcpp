@@ -493,4 +493,5 @@ template class Plotter<1>;
 template class Plotter<2>;
 template class Plotter<3>;
 
+template class Plotter<6>;
 } // namespace mrcpp

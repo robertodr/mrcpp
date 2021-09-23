@@ -121,4 +121,5 @@ template class ConvolutionOperator<1>;
 template class ConvolutionOperator<2>;
 template class ConvolutionOperator<3>;
 
+template class ConvolutionOperator<6>;
 } // namespace mrcpp

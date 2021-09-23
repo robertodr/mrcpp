@@ -68,4 +68,5 @@ template class BSOperator<1>;
 template class BSOperator<2>;
 template class BSOperator<3>;
 
+template class BSOperator<6>;
 } // namespace mrcpp

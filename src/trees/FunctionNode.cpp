@@ -404,12 +404,15 @@ template <int D> double dot_wavelet(const FunctionNode<D> &bra, const FunctionNo
 template double dot_scaling(const FunctionNode<1> &bra, const FunctionNode<1> &ket);
 template double dot_scaling(const FunctionNode<2> &bra, const FunctionNode<2> &ket);
 template double dot_scaling(const FunctionNode<3> &bra, const FunctionNode<3> &ket);
+template double dot_scaling(const FunctionNode<6> &bra, const FunctionNode<6> &ket);
 template double dot_wavelet(const FunctionNode<1> &bra, const FunctionNode<1> &ket);
 template double dot_wavelet(const FunctionNode<2> &bra, const FunctionNode<2> &ket);
 template double dot_wavelet(const FunctionNode<3> &bra, const FunctionNode<3> &ket);
+template double dot_wavelet(const FunctionNode<6> &bra, const FunctionNode<6> &ket);
 
 template class FunctionNode<1>;
 template class FunctionNode<2>;
 template class FunctionNode<3>;
 
+template class FunctionNode<6>;
 } // namespace mrcpp

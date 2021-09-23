@@ -108,4 +108,5 @@ template class ProjectionCalculator<1>;
 template class ProjectionCalculator<2>;
 template class ProjectionCalculator<3>;
 
+template class ProjectionCalculator<6>;
 } // namespace mrcpp

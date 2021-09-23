@@ -109,4 +109,5 @@ template class OperatorStatistics<1>;
 template class OperatorStatistics<2>;
 template class OperatorStatistics<3>;
 
+template class OperatorStatistics<6>;
 } // namespace mrcpp

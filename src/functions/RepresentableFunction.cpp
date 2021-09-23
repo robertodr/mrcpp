@@ -114,4 +114,5 @@ template class RepresentableFunction<1>;
 template class RepresentableFunction<2>;
 template class RepresentableFunction<3>;
 
+template class RepresentableFunction<6>;
 } // namespace mrcpp

@@ -129,4 +129,5 @@ template class NodeBox<1>;
 template class NodeBox<2>;
 template class NodeBox<3>;
 
+template class NodeBox<6>;
 } // namespace mrcpp

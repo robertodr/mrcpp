@@ -303,21 +303,26 @@ template <> void tree_utils::mw_transform_back<3>(MWTree<3> &tree, double *coeff
 template bool tree_utils::split_check<1>(const MWNode<1> &node, double prec, double split_fac, bool abs_prec);
 template bool tree_utils::split_check<2>(const MWNode<2> &node, double prec, double split_fac, bool abs_prec);
 template bool tree_utils::split_check<3>(const MWNode<3> &node, double prec, double split_fac, bool abs_prec);
+template bool tree_utils::split_check<6>(const MWNode<6> &node, double prec, double split_fac, bool abs_prec);
 
 template void tree_utils::make_node_table<1>(MWTree<1> &tree, MWNodeVector<1> &table);
 template void tree_utils::make_node_table<2>(MWTree<2> &tree, MWNodeVector<2> &table);
 template void tree_utils::make_node_table<3>(MWTree<3> &tree, MWNodeVector<3> &table);
+template void tree_utils::make_node_table<6>(MWTree<6> &tree, MWNodeVector<6> &table);
 
 template void tree_utils::make_node_table<1>(MWTree<1> &tree, std::vector<MWNodeVector<1>> &table);
 template void tree_utils::make_node_table<2>(MWTree<2> &tree, std::vector<MWNodeVector<2>> &table);
 template void tree_utils::make_node_table<3>(MWTree<3> &tree, std::vector<MWNodeVector<3>> &table);
+template void tree_utils::make_node_table<6>(MWTree<6> &tree, std::vector<MWNodeVector<6>> &table);
 
 template void tree_utils::mw_transform<1>(const MWTree<1> &tree, double *coeff_in, double *coeff_out, bool readOnlyScaling, int stride, bool b_overwrite);
 template void tree_utils::mw_transform<2>(const MWTree<2> &tree, double *coeff_in, double *coeff_out, bool readOnlyScaling, int stride, bool b_overwrite);
 template void tree_utils::mw_transform<3>(const MWTree<3> &tree, double *coeff_in, double *coeff_out, bool readOnlyScaling, int stride, bool b_overwrite);
+template void tree_utils::mw_transform<6>(const MWTree<6> &tree, double *coeff_in, double *coeff_out, bool readOnlyScaling, int stride, bool b_overwrite);
 
 template void tree_utils::mw_transform_back<1>(MWTree<1> &tree, double *coeff_in, double *coeff_out, int stride);
 template void tree_utils::mw_transform_back<2>(MWTree<2> &tree, double *coeff_in, double *coeff_out, int stride);
 template void tree_utils::mw_transform_back<3>(MWTree<3> &tree, double *coeff_in, double *coeff_out, int stride);
+template void tree_utils::mw_transform_back<6>(MWTree<6> &tree, double *coeff_in, double *coeff_out, int stride);
 
 } // namespace mrcpp

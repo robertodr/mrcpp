@@ -319,4 +319,5 @@ template class BoundingBox<1>;
 template class BoundingBox<2>;
 template class BoundingBox<3>;
 
+template class BoundingBox<6>;
 } // namespace mrcpp

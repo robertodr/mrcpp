@@ -75,4 +75,5 @@ template class CopyAdaptor<1>;
 template class CopyAdaptor<2>;
 template class CopyAdaptor<3>;
 
+template class CopyAdaptor<6>;
 } // namespace mrcpp

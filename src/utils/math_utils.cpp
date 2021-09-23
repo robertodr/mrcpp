@@ -272,6 +272,7 @@ template <class T> std::vector<std::vector<T>> math_utils::cartesian_product(std
 template double math_utils::calc_distance<1>(const Coord<1> &a, const Coord<1> &b);
 template double math_utils::calc_distance<2>(const Coord<2> &a, const Coord<2> &b);
 template double math_utils::calc_distance<3>(const Coord<3> &a, const Coord<3> &b);
+template double math_utils::calc_distance<6>(const Coord<6> &a, const Coord<6> &b);
 
 template std::vector<std::vector<int>> math_utils::cartesian_product(std::vector<int> A, std::vector<int> B);
 template std::vector<std::vector<int>> math_utils::cartesian_product(std::vector<std::vector<int>> l_A, std::vector<int> B);

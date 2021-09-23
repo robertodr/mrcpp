@@ -68,4 +68,5 @@ template class PHOperator<1>;
 template class PHOperator<2>;
 template class PHOperator<3>;
 
+template class PHOperator<6>;
 } // namespace mrcpp

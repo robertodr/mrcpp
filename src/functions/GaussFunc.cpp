@@ -239,4 +239,6 @@ template <> double GaussFunc<3>::calcCoulombEnergy(const GaussFunc<3> &gf) const
 template class GaussFunc<1>;
 template class GaussFunc<2>;
 template class GaussFunc<3>;
+
+template class GaussFunc<6>;
 } // namespace mrcpp

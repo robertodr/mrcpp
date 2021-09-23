@@ -170,4 +170,5 @@ template class TreeBuilder<1>;
 template class TreeBuilder<2>;
 template class TreeBuilder<3>;
 
+template class TreeBuilder<6>;
 } // namespace mrcpp

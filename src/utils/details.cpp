@@ -117,13 +117,16 @@ template <typename T, int D> std::array<T, D> convert_to_std_array(T *arr) {
 template bool are_all_equal<1>(const std::array<double, 1> &exponent);
 template bool are_all_equal<2>(const std::array<double, 2> &exponent);
 template bool are_all_equal<3>(const std::array<double, 3> &exponent);
+template bool are_all_equal<6>(const std::array<double, 6> &exponent);
 
 template std::array<double, 1> convert_to_std_array<double, 1>(double *arr);
 template std::array<double, 2> convert_to_std_array<double, 2>(double *arr);
 template std::array<double, 3> convert_to_std_array<double, 3>(double *arr);
+template std::array<double, 6> convert_to_std_array<double, 6>(double *arr);
 
 template std::array<int, 1> convert_to_std_array<int, 1>(int *arr);
 template std::array<int, 2> convert_to_std_array<int, 2>(int *arr);
 template std::array<int, 3> convert_to_std_array<int, 3>(int *arr);
+template std::array<int, 6> convert_to_std_array<int, 6>(int *arr);
 } // namespace details
 } // namespace mrcpp

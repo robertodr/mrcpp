@@ -430,4 +430,5 @@ template class NodeAllocator<1>;
 template class NodeAllocator<2>;
 template class NodeAllocator<3>;
 
+template class NodeAllocator<6>;
 } // namespace mrcpp

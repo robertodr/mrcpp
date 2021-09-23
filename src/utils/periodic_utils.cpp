@@ -94,14 +94,17 @@ template <int D> void coord_manipulation(Coord<D> &r, const std::array<bool, D> 
 template bool in_unit_cell<1>(NodeIndex<1> idx);
 template bool in_unit_cell<2>(NodeIndex<2> idx);
 template bool in_unit_cell<3>(NodeIndex<3> idx);
+template bool in_unit_cell<6>(NodeIndex<6> idx);
 
 template void index_manipulation<1>(NodeIndex<1> &idx, const std::array<bool, 1> &periodic);
 template void index_manipulation<2>(NodeIndex<2> &idx, const std::array<bool, 2> &periodic);
 template void index_manipulation<3>(NodeIndex<3> &idx, const std::array<bool, 3> &periodic);
+template void index_manipulation<6>(NodeIndex<6> &idx, const std::array<bool, 6> &periodic);
 
 template void coord_manipulation<1>(Coord<1> &r, const std::array<bool, 1> &periodic);
 template void coord_manipulation<2>(Coord<2> &r, const std::array<bool, 2> &periodic);
 template void coord_manipulation<3>(Coord<3> &r, const std::array<bool, 3> &periodic);
+template void coord_manipulation<6>(Coord<6> &r, const std::array<bool, 6> &periodic);
 
 } // namespace periodic
 } // namespace mrcpp

@@ -700,4 +700,5 @@ template class FunctionTree<1>;
 template class FunctionTree<2>;
 template class FunctionTree<3>;
 
+template class FunctionTree<6>;
 } // namespace mrcpp

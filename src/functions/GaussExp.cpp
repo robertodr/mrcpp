@@ -375,4 +375,6 @@ template class GaussExp<1>;
 template class GaussExp<2>;
 template class GaussExp<3>;
 
+template class GaussExp<6>;
+
 } // namespace mrcpp

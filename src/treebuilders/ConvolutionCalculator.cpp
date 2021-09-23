@@ -401,4 +401,5 @@ template class ConvolutionCalculator<1>;
 template class ConvolutionCalculator<2>;
 template class ConvolutionCalculator<3>;
 
+template class ConvolutionCalculator<6>;
 } // namespace mrcpp

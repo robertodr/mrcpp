@@ -233,13 +233,13 @@ void math_utils::tensor_expand_coords_6D(int kp1, const MatrixXd &primitive, Mat
             for (int k = 0; k < kp1; k++) {
                 for (int l = 0; l < kp1; l++) {
                     for (int m = 0; m < kp1; m++) {
-                        for (int n = 0; n < kp1; n++) {
-                            expanded(0, n) = primitive(0, n);
+                        for (int p = 0; p < kp1; p++) {
+                            expanded(0, n) = primitive(0, p);
                             expanded(1, n) = primitive(1, m);
                             expanded(2, n) = primitive(2, l);
-                            expanded(3, n) = primitive(2, k);
-                            expanded(4, n) = primitive(2, j);
-                            expanded(5, n) = primitive(2, i);
+                            expanded(3, n) = primitive(3, k);
+                            expanded(4, n) = primitive(4, j);
+                            expanded(5, n) = primitive(5, i);
                             n++;
                         }
                     }

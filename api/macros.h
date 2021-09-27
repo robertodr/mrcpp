@@ -42,8 +42,12 @@ namespace mrcpp {
         if (A & (1 << N)) return true;                                                                                 \
         return false;                                                                                                  \
     }
-#define IS_ODD(A) (A & 1)
-#define IS_EVEN(A) (!(A & 1))
+inline constexpr bool IS_ODD(int A) {
+    return (A & 1);
+}
+inline constexpr bool IS_EVEN(int A) {
+    return !(A & 1);
+}
 #define IS_EQUAL(A, B) (fabs(A - B) < MachineZero)
 
 #define SET_BITS(A, N) A |= (N)

@@ -111,8 +111,8 @@ public:
     virtual void deleteChildren();
     virtual void deleteParent();
 
-    virtual void cvTransform(int kind);
-    virtual void mwTransform(int kind);
+    void cvTransform(int kind);
+    void mwTransform(int kind);
 
     double getNodeNorm(const NodeIndex<D> &idx) const;
 

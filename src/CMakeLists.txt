@@ -1,5 +1,10 @@
 add_library(mrcpp "")
 
+target_compile_features(mrcpp
+  PUBLIC
+    cxx_std_17
+  )
+
 add_dependencies(mrcpp mrcpp-info)
 
 target_compile_definitions(mrcpp

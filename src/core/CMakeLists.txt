@@ -26,6 +26,8 @@ list(APPEND ${_dirname}_h
   ${CMAKE_CURRENT_SOURCE_DIR}/QuadratureCache.h
   ${CMAKE_CURRENT_SOURCE_DIR}/ScalingBasis.h
   ${CMAKE_CURRENT_SOURCE_DIR}/ScalingCache.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/tteigen.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/ttutils.hpp
   )
 
 # Sets install directory for all the headers in the list

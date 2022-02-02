@@ -1,8 +1,14 @@
-# Prepare "Catch" library for other executables, if not already available
-if(NOT TARGET Catch)
-  add_library(Catch INTERFACE)
-  target_include_directories(Catch INTERFACE ${PROJECT_SOURCE_DIR}/external/catch)
-endif()
+include(FetchContent)
+
+# declare Catch2
+FetchContent_Declare(Catch2
+  QUIET
+  URL
+    https://github.com/catchorg/Catch2/archive/refs/tags/v2.13.8.zip
+  )
+
+# make available
+FetchContent_MakeAvailable(Catch2)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -16,7 +22,16 @@ add_subdirectory(scalingfactor)
 
 target_link_libraries(mrcpp-tests
   mrcpp
-  Catch
+  Catch2::Catch2
+  )
+
+# automatic discovery of unit tests
+list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/contrib)
+include(Catch)
+catch_discover_tests(mrcpp-tests
+  PROPERTIES
+    LABELS "unit"
+    EXTRA_ARGS "--success"
   )
 
 # RPATH fixing

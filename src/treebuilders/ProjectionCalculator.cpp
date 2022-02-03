@@ -46,6 +46,7 @@ template <int D> void ProjectionCalculator<D>::calcNode(MWNode<D> &node) {
     node.mwTransform(Compression);
     node.setHasCoefs();
     node.calcNorms();
+    if constexpr (D >= 3) { node.coefsToTT(); }
 }
 
 /* Old interpolating version, somewhat faster

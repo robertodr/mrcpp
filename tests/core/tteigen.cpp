@@ -9,7 +9,7 @@
 
 #include "tt_testing_utils.hpp"
 
-using namespace tteigen;
+using namespace mrcpp;
 
 TEST_CASE("tensor train format with SVD", "[tt][eigen][svd]") {
     auto A = sample_tensor<5, 5, 5, 5, 5, 5>();

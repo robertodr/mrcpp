@@ -37,6 +37,7 @@
 #include "HilbertPath.h"
 #include "MWTree.h"
 #include "NodeIndex.h"
+#include "core/tteigen.hpp"
 
 namespace mrcpp {
 
@@ -102,6 +103,40 @@ public:
     void addCoefBlock(int block, int block_size, const double *c);
     void zeroCoefBlock(int block, int block_size);
 
+    template <auto D_ = D, std::enable_if_t<(D_ >= 3), bool> = true> void coefsToTT(double epsilon = 1.0e-4) {
+        using size_type = typename TensorTrain<double, D>::size_type;
+        std::array<size_type, D> modes;
+        std::fill_n(modes.begin(), D, this->getKp1());
+        size_type start = 0;
+        auto block = 0;
+        std::cout << "k + 1 = " << this->getKp1() << " (k+1)^" << D << " = " << this->getKp1_d() << std::endl;
+        for (auto &x : tt_coefs) {
+            x = TensorTrain<double, D>(coefs, modes, start, epsilon);
+
+            // reconstruct block
+            auto foo = x.to_full();
+            // check decomposition was done correctly
+            auto ok = true;
+            for (auto i = 0; i < this->getKp1_d(); ++i) {
+                auto diff = coefs[start + i] - foo.data()[i];
+                if (std::abs(diff) > 1.0e-8) {
+                    std::cout << "uh-oh! " << diff << std::endl;
+                    ok = false;
+                }
+            }
+            if (ok) { std::cout << "all good!" << std::endl; }
+
+            // move on to next block
+            start += this->getKp1_d();
+
+            // some stats
+            std::cout << "Block " << block << std::endl;
+            std::cout << ">> compression " << std::fixed << std::setprecision(2) << x.compression() * 100 << "%" << std::endl;
+            std::cout << ">> shapes " << x.shape(0) << " " << x.shape(1) << " " << x.shape(2) << std::endl;
+            block += 1;
+        }
+    }
+
     void calcNorms();
     void zeroNorms();
     void clearNorms();
@@ -165,6 +200,9 @@ protected:
                                    // NB: must be set before used.
     double *coefs{nullptr};
     int n_coefs{0};
+
+    // one tensor train for each block
+    std::array<TensorTrain<double, D>, (1 << D)> tt_coefs;
 
     int serialIx{-1};       // index in serial Tree
     int parentSerialIx{-1}; // index of parent in serial Tree, or -1 for roots

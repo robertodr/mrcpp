@@ -12,7 +12,7 @@
 #include "ttutils.hpp"
 #include "utils/Printer.h"
 
-namespace tteigen {
+namespace mrcpp {
 /**
  *
  *  Horizontal unfolding
@@ -231,17 +231,17 @@ public:
      *  @warning The dense tensor data is assumed to be in natural descending
      *  order. This is critical for the tensor train SVD algorithm to work correctly.
      */
-    TensorTrain(T *A, std::array<size_type, D> Is, double epsilon = 1e-12)
+    TensorTrain(T *A, std::array<size_type, D> Is, size_type start = 0, double epsilon = 1e-12)
             : norm_computed_{true}
             , epsilon_{epsilon}
             , modes_{Is} {
-        auto sz = std::accumulate(modes_.cbegin(), modes_.cend(), std::multiplies<size_type>(), 1);
+        auto sz = std::accumulate(modes_.cbegin(), modes_.cend(), 1, std::multiplies<size_type>());
         // compute norm of input tensor
-        norm_ = frobenius_norm(A, sz);
+        norm_ = frobenius_norm(A + start, sz);
 
         auto delta = epsilon_ * norm_ / std::sqrt(D - 1);
 
-        decompose(A, sz, delta);
+        decompose(A + start, sz, delta);
     }
 
     /** *Destructively* generate a tensor train from given tensor and tolerance.
@@ -797,4 +797,4 @@ auto hadamard_product(const TensorTrain<T, D> &X, const TensorTrain<U, D> &Y, do
 
     return Z;
 }
-} // namespace tteigen
+} // namespace mrcpp

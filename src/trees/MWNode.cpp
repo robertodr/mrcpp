@@ -258,7 +258,6 @@ template <int D> void MWNode<D>::giveChildCoefs(int cIdx, bool overwrite) {
     node_i.mwTransform(Reconstruction);
 
     int kp1_d = this->getKp1_d();
-    int nChildren = this->getTDim();
 
     if (this->children[cIdx] == nullptr) MSG_ABORT("Child does not exist!");
     MWNode<D> &child = getMWChild(cIdx);
@@ -653,7 +652,7 @@ template <int D> Coord<D> MWNode<D>::getCenter() const {
     auto scaling_factor = getMWTree().getMRA().getWorldBox().getScalingFactors();
     auto &l = getNodeIndex();
     auto r = Coord<D>{};
-    for (int d = 0; d < D; d++) r[d] = scaling_factor[d]*two_n*(l[d] + 0.5);
+    for (int d = 0; d < D; d++) r[d] = scaling_factor[d] * two_n * (l[d] + 0.5);
     return r;
 }
 
@@ -1019,7 +1018,6 @@ template <int D> std::ostream &MWNode<D>::print(std::ostream &o) const {
  * i.e. *not* same normalization as a squareNorm
  */
 template <int D> void MWNode<D>::setMaxSquareNorm() {
-    auto n = this->getScale();
     this->maxWSquareNorm = calcScaledWSquareNorm();
     this->maxSquareNorm = calcScaledSquareNorm();
 
@@ -1034,7 +1032,6 @@ template <int D> void MWNode<D>::setMaxSquareNorm() {
 }
 /** @brief recursively reset maxSquaredNorm and maxWSquareNorm of parent and descendants to value -1 */
 template <int D> void MWNode<D>::resetMaxSquareNorm() {
-    auto n = this->getScale();
     this->maxSquareNorm = -1.0;
     this->maxWSquareNorm = -1.0;
     if (not this->isEndNode()) {

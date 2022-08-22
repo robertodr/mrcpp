@@ -111,7 +111,7 @@ public:
         auto block = 0;
         std::cout << "k + 1 = " << this->getKp1() << " (k+1)^" << D << " = " << this->getKp1_d() << std::endl;
         for (auto &x : tt_coefs) {
-            x = TensorTrain<double, D>(coefs, modes, start, epsilon);
+            x = TensorTrain<double, D>(coefs, modes, start);
 
             // reconstruct block
             auto foo = x.to_full();
